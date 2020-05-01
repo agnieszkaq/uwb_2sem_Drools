@@ -1,22 +1,22 @@
 package model;
 
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DriveInformation {
 	
-	Date driveLicenceDate;
+	GregorianCalendar driveLicenceDate;
 	Boolean isCullet = false;
 	Integer culletNumber = 0;
 	
-	public DriveInformation(Date driveLicenceDate, Boolean isCullet, Integer culletNumber) {
+	public DriveInformation(GregorianCalendar driveLicenceDate, Boolean isCullet, Integer culletNumber) {
 		this.driveLicenceDate = driveLicenceDate;
 		this.isCullet = isCullet;
 		this.culletNumber = culletNumber;
 	}
-	public Date getDriveLicenceDate() {
+	public GregorianCalendar getDriveLicenceDate() {
 		return driveLicenceDate;
 	}
-	public void setDriveLicenceDate(Date driveLicenceDate) {
+	public void setDriveLicenceDate(GregorianCalendar driveLicenceDate) {
 		this.driveLicenceDate = driveLicenceDate;
 	}
 	public Boolean getIsCullet() {

@@ -5,15 +5,15 @@ import java.util.Date;
 public class Car {
 	
 	String modelName;
-	Date productionYear;
+	Integer productionYear;
     Double mileage;
     String fuelType;
     Integer enginePower;
     Integer numberOfOwner;
-    Date yearOfPurchase;
+    Integer yearOfPurchase;
     
-	public Car(String modelName, Date productionYear, Double mileage, String fuelType, Integer enginePower,
-			Integer numberOfOwner, Date yearOfPurchase) {
+	public Car(String modelName, Integer productionYear, Double mileage, String fuelType, Integer enginePower,
+			Integer numberOfOwner, Integer yearOfPurchase) {
 		super();
 		this.modelName = modelName;
 		this.productionYear = productionYear;
@@ -29,10 +29,10 @@ public class Car {
 	public void setModelName(String modelName) {
 		this.modelName = modelName;
 	}
-	public Date getProductionYear() {
+	public Integer getProductionYear() {
 		return productionYear;
 	}
-	public void setProductionYear(Date productionYear) {
+	public void setProductionYear(Integer productionYear) {
 		this.productionYear = productionYear;
 	}
 	public Double getMileage() {
@@ -59,10 +59,10 @@ public class Car {
 	public void setNumberOfOwner(Integer numberOfOwner) {
 		this.numberOfOwner = numberOfOwner;
 	}
-	public Date getYearOfPurchase() {
+	public Integer getYearOfPurchase() {
 		return yearOfPurchase;
 	}
-	public void setYearOfPurchase(Date yearOfPurchase) {
+	public void setYearOfPurchase(Integer yearOfPurchase) {
 		this.yearOfPurchase = yearOfPurchase;
 	}
 	@Override
