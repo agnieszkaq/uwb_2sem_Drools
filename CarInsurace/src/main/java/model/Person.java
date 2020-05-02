@@ -3,11 +3,11 @@ package model;
 
 public class Person {
  
-	Integer age;
-	String gender;
-	String maritalStatus;
-	String voivodeship;
-	Boolean hasKids = false;
+	private Integer age;
+	private String gender;
+	private String maritalStatus;
+	private String voivodeship;
+	private Boolean hasKids = false;
 	
 	public Person(Integer age, String gender, String maritalStatus, String voivodeship, Boolean hasKids) {
 		super();

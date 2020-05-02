@@ -2,8 +2,8 @@ package model;
 
 public class Policyholder {
 
-	Person person;
-	Car car;
+	private Person person;
+	private Car car;
 	
 	public Policyholder(Person person, Car car, DriveInformation driveInfo) {
 		super();

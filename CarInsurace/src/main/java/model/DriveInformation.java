@@ -4,9 +4,9 @@ import java.util.GregorianCalendar;
 
 public class DriveInformation {
 	
-	GregorianCalendar driveLicenceDate;
-	Boolean isCullet = false;
-	Integer culletNumber = 0;
+	private GregorianCalendar driveLicenceDate;
+	private Boolean isCullet = false;
+	private Integer culletNumber = 0;
 	
 	public DriveInformation(GregorianCalendar driveLicenceDate, Boolean isCullet, Integer culletNumber) {
 		this.driveLicenceDate = driveLicenceDate;
