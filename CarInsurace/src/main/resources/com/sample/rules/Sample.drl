@@ -1,0 +1,25 @@
+//created on: 2020-05-02
+package com.sample.rules
+
+import com.sample.model.InsurancePrice;
+import com.sample.model.Policyholder;
+
+rule "Your First Rule"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.age > 30)
+    then
+        i.price = 200.00;
+        p.getPerson().setAge(34);
+
+end
+
+rule "Your Second Rule"
+    //include attributes such as "salience" here...
+    when
+        //conditions
+    then
+        //actions
+
+end
