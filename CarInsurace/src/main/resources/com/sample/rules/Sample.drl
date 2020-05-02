@@ -30,7 +30,7 @@ rule "Pricing depends on the model: 3 - CATEGORY (least dangerous)"
        i: InsurancePrice ()
        p: Policyholder(p.getCar.modelName.equals("Nissan") || p.getCar.modelName.equals("Ford") )
     then
-        i.price = 250.00;
+        i.price = 300.00;
 
 end
 
@@ -39,7 +39,7 @@ rule "Percent calculating depends by production year: before 2000"
        i: InsurancePrice ()
        p: Policyholder(p.getCar.productionYear <= 2000 )
     then
-        i.price =  i.price * 1.09;
+        i.price =  i.price * 1.05;
 
 end
 
@@ -57,7 +57,7 @@ rule "Percent calculating depends by production year: between 2010 and 2020"
        i: InsurancePrice ()
        p: Policyholder(p.getCar.productionYear > 2010 && p.getCar.productionYear <= 2020 )
     then
-        i.price =  i.price * 1.05;
+        i.price =  i.price * 1.09;
 
 end
 
@@ -147,5 +147,59 @@ rule "Pricing depends on the number of owners, 2 or more"
 
 end
 
+rule "Pricing depends on the gender, female pays less"
 
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.gender.equals("female"))
+    then
+        i.price = i.price + 50;
 
+end
+
+rule "Pricing depends on the gender, male pays more"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.gender.equals("male"))
+    then
+        i.price = i.price + 100;
+
+end
+
+rule "Pricing depends on the having children, Person who have kids pays with discount"
+
+   when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.hasKids)
+    then
+        i.price = i.price * 0.9;
+
+end
+
+rule "Percent calculating depends by policyholder age: between 18 and 25 year old"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.age >= 18 && p.getPerson.age < 25 )
+    then
+        i.price =  i.price * 1.70;
+
+end
+
+rule "Percent calculating depends by policyholder age: between 25 and 35 year old"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.age >= 25 && p.getPerson.age < 35 )
+    then
+        i.price =  i.price * 1.25;
+
+end
+
+rule "Percent calculating depends by policyholder age: between 35 and 55 year old"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getPerson.age >= 35 && p.getPerson.age < 55 )
+    then
+        i.price =  i.price * 1.15;
+
+end

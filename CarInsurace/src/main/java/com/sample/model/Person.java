@@ -4,14 +4,12 @@ public class Person {
 
 	public int age;
 	public String gender;
-	public String maritalStatus;
 	public Boolean hasKids = false;
 
-	public Person(int age, String gender, String maritalStatus, Boolean hasKids) {
+	public Person(int age, String gender, Boolean hasKids) {
 		super();
 		this.age = age;
 		this.gender = gender;
-		this.maritalStatus = maritalStatus;
 		this.hasKids = hasKids;
 	}
 
@@ -31,14 +29,6 @@ public class Person {
 		this.gender = gender;
 	}
 
-	public String getMaritalStatus() {
-		return maritalStatus;
-	}
-
-	public void setMaritalStatus(String maritalStatus) {
-		this.maritalStatus = maritalStatus;
-	}
-
 	public Boolean getHasKids() {
 		return hasKids;
 	}
@@ -49,8 +39,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [age=" + age + ", gender=" + gender + ", maritalStatus=" + maritalStatus + ", hasKids=" + hasKids
-				+ "]";
+		return "Person [age=" + age + ", gender=" + gender + ", hasKids=" + hasKids + "]";
 	}
 
 }
