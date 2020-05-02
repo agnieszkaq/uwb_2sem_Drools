@@ -1,19 +1,16 @@
 package com.sample.model;
 
-import java.util.Date;
-
 public class Car {
 
-	private String modelName;
-	private Integer productionYear;
-	private Double mileage;
-	private String fuelType;
-	private Integer enginePower;
-	private Integer numberOfOwner;
-	private Integer yearOfPurchase;
+	public String modelName;
+	public Integer productionYear;
+	public Double mileage;
+	public String fuelType;
+	public Double enginePower;
+	public Integer numberOfOwner;
 
-	public Car(String modelName, Integer productionYear, Double mileage, String fuelType, Integer enginePower,
-			Integer numberOfOwner, Integer yearOfPurchase) {
+	public Car(String modelName, Integer productionYear, Double mileage, String fuelType, Double enginePower,
+			Integer numberOfOwner) {
 		super();
 		this.modelName = modelName;
 		this.productionYear = productionYear;
@@ -21,7 +18,6 @@ public class Car {
 		this.fuelType = fuelType;
 		this.enginePower = enginePower;
 		this.numberOfOwner = numberOfOwner;
-		this.yearOfPurchase = yearOfPurchase;
 	}
 
 	public String getModelName() {
@@ -56,11 +52,11 @@ public class Car {
 		this.fuelType = fuelType;
 	}
 
-	public Integer getEnginePower() {
+	public Double getEnginePower() {
 		return enginePower;
 	}
 
-	public void setEnginePower(Integer enginePower) {
+	public void setEnginePower(Double enginePower) {
 		this.enginePower = enginePower;
 	}
 
@@ -72,19 +68,10 @@ public class Car {
 		this.numberOfOwner = numberOfOwner;
 	}
 
-	public Integer getYearOfPurchase() {
-		return yearOfPurchase;
-	}
-
-	public void setYearOfPurchase(Integer yearOfPurchase) {
-		this.yearOfPurchase = yearOfPurchase;
-	}
-
 	@Override
 	public String toString() {
 		return "Car [modelName=" + modelName + ", productionYear=" + productionYear + ", mileage=" + mileage
-				+ ", fuelType=" + fuelType + ", enginePower=" + enginePower + ", numberOfOwner=" + numberOfOwner
-				+ ", yearOfPurchase=" + yearOfPurchase + "]";
+				+ ", fuelType=" + fuelType + ", enginePower=" + enginePower + ", numberOfOwner=" + numberOfOwner + "]";
 	}
 
 }

@@ -4,22 +4,148 @@ package com.sample.rules
 import com.sample.model.InsurancePrice;
 import com.sample.model.Policyholder;
 
-rule "Your First Rule"
+rule "Pricing depends on the model: 1 - CATEGORY (most dangerous)"
 
     when
        i: InsurancePrice ()
-       p: Policyholder(p.getPerson.age > 30)
+       p: Policyholder(p.getCar.modelName.equals("Audi") || p.getCar.modelName.equals("BMW") )
     then
-        i.price = 200.00;
-        p.getPerson().setAge(34);
+        i.price = 500.00;
 
 end
 
-rule "Your Second Rule"
-    //include attributes such as "salience" here...
+rule "Pricing depends on the model:  2 - CATEGORY (medium dangerous)"
+
     when
-        //conditions
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.modelName.equals("Mercedes") || p.getCar.modelName.equals("Honda") )
     then
-        //actions
+        i.price = 400.00;
 
 end
+
+rule "Pricing depends on the model: 3 - CATEGORY (least dangerous)"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.modelName.equals("Nissan") || p.getCar.modelName.equals("Ford") )
+    then
+        i.price = 250.00;
+
+end
+
+rule "Percent calculating depends by production year: before 2000"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.productionYear <= 2000 )
+    then
+        i.price =  i.price * 1.09;
+
+end
+
+rule "Percent calculating depends by production year: between 2000 and 2010"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.productionYear > 2000 && p.getCar.productionYear <= 2010 )
+    then
+        i.price =  i.price * 1.07;
+
+end
+
+rule "Percent calculating depends by production year: between 2010 and 2020"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.productionYear > 2010 && p.getCar.productionYear <= 2020 )
+    then
+        i.price =  i.price * 1.05;
+
+end
+
+
+rule "Percent calculating depends by engine power: less than 1.0 liter"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.enginePower < 1.0 )
+    then
+        i.price =  i.price * 1.02;
+
+end
+
+rule "Percent calculating depends by engine power: between 1.00 and 2.5 liter"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.enginePower >= 1.0 && p.getCar.enginePower < 2.5 )
+    then
+        i.price =  i.price * 1.22;
+
+end
+
+rule "Percent calculating depends by engine power: between 2.5 or less liter"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.enginePower >= 2.5  )
+    then
+        i.price =  i.price * 1.52;
+
+end
+
+rule "Percent calculating depends by milage: less than 50 000 kilometers"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.mileage  < 50000  )
+    then
+        i.price =  i.price * 1.05;
+
+end
+
+rule "Percent calculating depends by milage: greater than 50 000 kilometers"
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.mileage  >= 50000  )
+    then
+        i.price =  i.price * 1.15;
+
+end
+
+rule "Pricing depends on the fuelType:  1 - CATEGORY (PB + LPG)"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.fuelType.equals("LPG") || p.getCar.fuelType.equals("PB+LPG") )
+    then
+        i.price = i.price + 50;
+
+end
+
+rule "Pricing depends on the fuelType:  2 - CATEGORY (PB)"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.fuelType.equals("PB"))
+    then
+        i.price = i.price + 30;
+
+end
+
+rule "Pricing depends on the fuelType:  3 - CATEGORY (ON)"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.fuelType.equals("ON"))
+    then
+        i.price = i.price + 20;
+
+end
+
+rule "Pricing depends on the number of owners, 2 or more"
+
+    when
+       i: InsurancePrice ()
+       p: Policyholder(p.getCar.numberOfOwner >= 2 )
+    then
+        i.price = i.price * 1.05;
+
+end
+
+
+

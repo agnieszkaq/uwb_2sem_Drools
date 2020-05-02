@@ -22,19 +22,18 @@ public class CarInsurance {
 			KieSession kSession = kContainer.newKieSession("ksession-rules");
 
 			Person person1 = new Person(24, "Female", "mrried", false);
-			Car car1 = new Car("BMW", 2014, 97000.0, "LPG", 120, 0, 2020);
+			Car car1 = new Car("Audi", 2020, 970.0, "LPG", 3.20, 1);
 			DriveInformation driveInfo1 = new DriveInformation(new GregorianCalendar(1952, 5, 4), true, 1);
 			Policyholder policyholder = new Policyholder(person1, car1, driveInfo1);
 
-			Double a = 200.0;
-			InsurancePrice insurancePrice = new InsurancePrice(a);
+			
+			InsurancePrice insurancePrice = new InsurancePrice(0.0);
 
 			kSession.insert(insurancePrice);
 			kSession.insert(policyholder);
 			kSession.fireAllRules();
 
 			System.out.println(insurancePrice.toString());
-			System.out.println(policyholder.getPerson().getAge());
 
 		} catch (Throwable t) {
 			t.printStackTrace();
