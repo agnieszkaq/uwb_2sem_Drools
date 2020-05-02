@@ -22,12 +22,13 @@ public class CarInsurance {
 
 			Person person1 = new Person(18, "male", false);
 			Car car1 = new Car("Audi", 1997, 970.0, "LPG", 3.20, 0);
-			DriveInformation driveInfo1 = new DriveInformation(new GregorianCalendar(1952, 5, 4), true, 1);
+			DriveInformation driveInfo1 = new DriveInformation(new GregorianCalendar(1952, 5, 4), true);
 			Policyholder policyholder = new Policyholder(person1, car1, driveInfo1);
 
 			
 			InsurancePrice insurancePrice = new InsurancePrice(0.0);
 
+			policyholder.getDriveInfo().getDateInYearsfromToday();
 			kSession.insert(insurancePrice);
 			kSession.insert(policyholder);
 			kSession.fireAllRules();

@@ -203,3 +203,24 @@ rule "Percent calculating depends by policyholder age: between 35 and 55 year ol
         i.price =  i.price * 1.15;
 
 end
+
+rule "Pricing depends on the having cullet"
+
+   when
+       i: InsurancePrice ()
+       p: Policyholder(p.getDriveInfo.IsCullet)
+    then
+        i.price = i.price * 1.1;
+
+end
+
+rule "Pricing depends on the date of get drive licence: people who have less than 7 years of experience pay more"
+
+   when
+       i: InsurancePrice ()
+       p: Policyholder(p.getDriveInfo().dateInYearsfromToday < 7 )
+    then
+        i.price = i.price * 1.1;
+
+end
+
