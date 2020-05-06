@@ -157,11 +157,11 @@ rule "Pricing depends on the gender, female pays less"
 
 end
 
-rule "Pricing depends on the gender, male pays more"
+rule "Pricing depends on the gender, female pays more"
 
     when
        i: InsurancePrice ()
-       p: Policyholder(p.getPerson.gender.equals("male"))
+       p: Policyholder(p.getPerson.gender.equals("female"))
     then
         i.price = i.price + 100;
 
