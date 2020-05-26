@@ -42,12 +42,6 @@ public class MainFrame extends JFrame {
 		this.setTitle("System regu³ wspomagaj¹cy ubezpieczanie samochodów.");
 		getContentPane().setLayout(null);
 
-		JLabel lblA = new JLabel(
-				"<html>Autorzy: Agnieszka Kurel i Pawe³ Czeczot.<br/>Projekt zaliczeniowy z przedmiotu \"Systemy ekspertowe\".<br/>Instytut Informatyki, UwB, 2020.06</html>");
-		lblA.setFont(new Font("Calibri", Font.PLAIN, 11));
-		lblA.setBounds(10, 585, 304, 71);
-		getContentPane().add(lblA);
-
 		JSeparator separator = new JSeparator();
 		separator.setBounds(-11, 591, 581, 2);
 		getContentPane().add(separator);
