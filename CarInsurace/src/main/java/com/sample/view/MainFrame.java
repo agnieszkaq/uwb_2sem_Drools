@@ -12,36 +12,37 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+
 import datechooser.beans.DateChooserCombo;
+
+import com.sample.model.Car;
+import com.sample.model.DriveInformation;
+import com.sample.model.InsurancePrice;
+import com.sample.model.Person;
+import com.sample.model.Policyholder;
 import com.toedter.calendar.JYearChooser;
 import java.awt.event.ActionListener;
+import java.util.GregorianCalendar;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
+
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+
 import javax.swing.event.ChangeEvent;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import java.awt.Label;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame {
-	private JTextField textField;
+	private JTextField enginePowerTextField;
+	private JYearChooser productionYearChooser;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainFrame frame = new MainFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public MainFrame() {
 		getContentPane().setForeground(Color.DARK_GRAY);
 		getContentPane().setFont(new Font("Calibri", Font.BOLD, 14));
@@ -74,64 +75,64 @@ public class MainFrame extends JFrame {
 		lblInformacjeOUbezpieczajcym.setBounds(43, 11, 325, 36);
 		panel.add(lblInformacjeOUbezpieczajcym);
 
-		JLabel sliderAgeLabel = new JLabel("Wiek: 18 lat");
-		sliderAgeLabel.setForeground(Color.DARK_GRAY);
-		sliderAgeLabel.setFont(new Font("Calibri", Font.BOLD, 14));
-		sliderAgeLabel.setBounds(25, 69, 77, 26);
-		getContentPane().add(sliderAgeLabel);
-		
-		JSlider slider = new JSlider();
-		slider.addChangeListener(new ChangeListener() {
+		JLabel ageLabel = new JLabel("Wiek: 18 lat");
+		ageLabel.setForeground(Color.DARK_GRAY);
+		ageLabel.setFont(new Font("Calibri", Font.BOLD, 14));
+		ageLabel.setBounds(25, 69, 77, 26);
+		getContentPane().add(ageLabel);
+
+		JSlider ageSlider = new JSlider();
+		ageSlider.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				int sliderValue = slider.getValue();
-				sliderAgeLabel.setText("Wiek: "+sliderValue+" lat");
+				int sliderValue = ageSlider.getValue();
+				ageLabel.setText("Wiek: " + sliderValue + " lat");
 			}
 		});
-		slider.setValue(0);
-		slider.setMinimum(18);
-		slider.setMajorTickSpacing(1);
-		slider.setPaintTicks(true);
-		slider.setForeground(new Color(0, 100, 0));
-		slider.setBackground(new Color(255, 255, 255));
-		slider.setBounds(112, 69, 340, 26);
-		getContentPane().add(slider);
+		ageSlider.setValue(0);
+		ageSlider.setMinimum(18);
+		ageSlider.setMajorTickSpacing(1);
+		ageSlider.setPaintTicks(true);
+		ageSlider.setForeground(new Color(0, 100, 0));
+		ageSlider.setBackground(new Color(255, 255, 255));
+		ageSlider.setBounds(112, 69, 340, 26);
+		getContentPane().add(ageSlider);
 
-		JLabel lblPe = new JLabel("P\u0142e\u0107:");
-		lblPe.setForeground(Color.DARK_GRAY);
-		lblPe.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPe.setBounds(25, 118, 66, 26);
-		getContentPane().add(lblPe);
+		JLabel genderLbl = new JLabel("P\u0142e\u0107:");
+		genderLbl.setForeground(Color.DARK_GRAY);
+		genderLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		genderLbl.setBounds(25, 118, 66, 26);
+		getContentPane().add(genderLbl);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(new Color(255, 255, 255));
 		separator_1.setBounds(10, 106, 540, 11);
 		getContentPane().add(separator_1);
 
-		JRadioButton rdbtnKobieta = new JRadioButton("Kobieta");
-		rdbtnKobieta.setSelected(true);
-		rdbtnKobieta.setForeground(Color.DARK_GRAY);
-		rdbtnKobieta.setFont(new Font("Calibri", Font.BOLD, 14));
-		rdbtnKobieta.setBounds(74, 119, 76, 24);
-		getContentPane().add(rdbtnKobieta);
+		JRadioButton genderFemaleRdbtn = new JRadioButton("Kobieta");
+		genderFemaleRdbtn.setSelected(true);
+		genderFemaleRdbtn.setForeground(Color.DARK_GRAY);
+		genderFemaleRdbtn.setFont(new Font("Calibri", Font.BOLD, 14));
+		genderFemaleRdbtn.setBounds(74, 119, 76, 24);
+		getContentPane().add(genderFemaleRdbtn);
 
-		JRadioButton rdbtnMczyzna = new JRadioButton("M\u0119\u017Cczyzna");
-		rdbtnMczyzna.setForeground(Color.DARK_GRAY);
-		rdbtnMczyzna.setFont(new Font("Calibri", Font.BOLD, 14));
-		rdbtnMczyzna.setBounds(151, 120, 109, 23);
-		getContentPane().add(rdbtnMczyzna);
+		JRadioButton genderMaleRdbtn = new JRadioButton("M\u0119\u017Cczyzna");
+		genderMaleRdbtn.setForeground(Color.DARK_GRAY);
+		genderMaleRdbtn.setFont(new Font("Calibri", Font.BOLD, 14));
+		genderMaleRdbtn.setBounds(151, 120, 109, 23);
+		getContentPane().add(genderMaleRdbtn);
 
-		rdbtnKobieta.addActionListener(new ActionListener() {
+		genderFemaleRdbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (rdbtnKobieta.isSelected()) {
-					rdbtnMczyzna.setSelected(false);
+				if (genderFemaleRdbtn.isSelected()) {
+					genderMaleRdbtn.setSelected(false);
 				}
 			}
 		});
 
-		rdbtnMczyzna.addActionListener(new ActionListener() {
+		genderMaleRdbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (rdbtnMczyzna.isSelected()) {
-					rdbtnKobieta.setSelected(false);
+				if (genderMaleRdbtn.isSelected()) {
+					genderFemaleRdbtn.setSelected(false);
 				}
 			}
 		});
@@ -141,37 +142,37 @@ public class MainFrame extends JFrame {
 		separator_2.setBounds(10, 151, 540, 11);
 		getContentPane().add(separator_2);
 
-		JLabel lblPotomstwo = new JLabel("Potomstwo:");
-		lblPotomstwo.setForeground(Color.DARK_GRAY);
-		lblPotomstwo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPotomstwo.setBounds(25, 157, 116, 26);
-		getContentPane().add(lblPotomstwo);
+		JLabel hasKidsLbl = new JLabel("Potomstwo:");
+		hasKidsLbl.setForeground(Color.DARK_GRAY);
+		hasKidsLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		hasKidsLbl.setBounds(25, 157, 116, 26);
+		getContentPane().add(hasKidsLbl);
 
-		JRadioButton rdbtnTak = new JRadioButton("TAK");
-		rdbtnTak.setSelected(true);
-		rdbtnTak.setForeground(Color.DARK_GRAY);
-		rdbtnTak.setFont(new Font("Calibri", Font.BOLD, 14));
-		rdbtnTak.setBounds(112, 158, 49, 24);
-		getContentPane().add(rdbtnTak);
+		JRadioButton hasKidsTrueRdbtn = new JRadioButton("TAK");
+		hasKidsTrueRdbtn.setSelected(true);
+		hasKidsTrueRdbtn.setForeground(Color.DARK_GRAY);
+		hasKidsTrueRdbtn.setFont(new Font("Calibri", Font.BOLD, 14));
+		hasKidsTrueRdbtn.setBounds(112, 158, 49, 24);
+		getContentPane().add(hasKidsTrueRdbtn);
 
-		JRadioButton rdbtnNie = new JRadioButton("NIE");
-		rdbtnNie.setForeground(Color.DARK_GRAY);
-		rdbtnNie.setFont(new Font("Calibri", Font.BOLD, 14));
-		rdbtnNie.setBounds(164, 158, 96, 24);
-		getContentPane().add(rdbtnNie);
+		JRadioButton hasKidsFalseRdbtn = new JRadioButton("NIE");
+		hasKidsFalseRdbtn.setForeground(Color.DARK_GRAY);
+		hasKidsFalseRdbtn.setFont(new Font("Calibri", Font.BOLD, 14));
+		hasKidsFalseRdbtn.setBounds(164, 158, 96, 24);
+		getContentPane().add(hasKidsFalseRdbtn);
 
-		rdbtnTak.addActionListener(new ActionListener() {
+		hasKidsTrueRdbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (rdbtnTak.isSelected()) {
-					rdbtnNie.setSelected(false);
+				if (hasKidsTrueRdbtn.isSelected()) {
+					hasKidsFalseRdbtn.setSelected(false);
 				}
 			}
 		});
 
-		rdbtnNie.addActionListener(new ActionListener() {
+		hasKidsFalseRdbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (rdbtnNie.isSelected()) {
-					rdbtnTak.setSelected(false);
+				if (hasKidsFalseRdbtn.isSelected()) {
+					hasKidsTrueRdbtn.setSelected(false);
 				}
 			}
 		});
@@ -207,50 +208,50 @@ public class MainFrame extends JFrame {
 		lblInformacjeOZdolnoci.setBounds(39, 11, 325, 36);
 		panel_2.add(lblInformacjeOZdolnoci);
 
-		JButton btnNewButton = new JButton("Przelicz ubezpieczenie");
-		btnNewButton.setForeground(new Color(255, 255, 255));
-		btnNewButton.setBackground(new Color(128, 0, 0));
-		btnNewButton.setFont(new Font("Calibri", Font.BOLD, 17));
-		btnNewButton.setBounds(25, 521, 321, 53);
-		getContentPane().add(btnNewButton);
+		JButton calculateBtn = new JButton("Przelicz ubezpieczenie");
+		calculateBtn.setForeground(new Color(255, 255, 255));
+		calculateBtn.setBackground(new Color(128, 0, 0));
+		calculateBtn.setFont(new Font("Calibri", Font.BOLD, 17));
+		calculateBtn.setBounds(25, 521, 321, 53);
+		getContentPane().add(calculateBtn);
 
 		String modelName[] = { "Audi", "BMW", "Mercedes", "Honda", "Nissan", "Ford" };
-		JComboBox comboBox = new JComboBox(modelName);
-		comboBox.setFont(new Font("Calibri", Font.BOLD, 14));
-		comboBox.setBounds(74, 269, 91, 20);
-		getContentPane().add(comboBox);
+		JComboBox modelNameComboBox = new JComboBox(modelName);
+		modelNameComboBox.setFont(new Font("Calibri", Font.BOLD, 14));
+		modelNameComboBox.setBounds(74, 269, 91, 20);
+		getContentPane().add(modelNameComboBox);
 
-		JLabel lblCzyKiedykolwiekMiae = new JLabel("Czy kiedykolwiek mia\u0142e\u015B st\u0142uczk\u0119?");
-		lblCzyKiedykolwiekMiae.setForeground(Color.DARK_GRAY);
-		lblCzyKiedykolwiekMiae.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblCzyKiedykolwiekMiae.setBounds(25, 438, 208, 26);
-		getContentPane().add(lblCzyKiedykolwiekMiae);
+		JLabel isCulletLbl = new JLabel("Czy kiedykolwiek mia\u0142e\u015B st\u0142uczk\u0119?");
+		isCulletLbl.setForeground(Color.DARK_GRAY);
+		isCulletLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		isCulletLbl.setBounds(25, 438, 208, 26);
+		getContentPane().add(isCulletLbl);
 
-		JRadioButton rdbtnCarCrushTrue = new JRadioButton("TAK");
-		rdbtnCarCrushTrue.setSelected(true);
-		rdbtnCarCrushTrue.setForeground(Color.DARK_GRAY);
-		rdbtnCarCrushTrue.setFont(new Font("Calibri", Font.BOLD, 14));
-		rdbtnCarCrushTrue.setBounds(230, 439, 49, 24);
-		getContentPane().add(rdbtnCarCrushTrue);
+		JRadioButton isCulletTrueRdbtn = new JRadioButton("TAK");
+		isCulletTrueRdbtn.setSelected(true);
+		isCulletTrueRdbtn.setForeground(Color.DARK_GRAY);
+		isCulletTrueRdbtn.setFont(new Font("Calibri", Font.BOLD, 14));
+		isCulletTrueRdbtn.setBounds(230, 439, 49, 24);
+		getContentPane().add(isCulletTrueRdbtn);
 
-		JRadioButton rdbtnCarCrushFalse = new JRadioButton("NIE");
-		rdbtnCarCrushFalse.setForeground(Color.DARK_GRAY);
-		rdbtnCarCrushFalse.setFont(new Font("Calibri", Font.BOLD, 14));
-		rdbtnCarCrushFalse.setBounds(281, 439, 96, 24);
-		getContentPane().add(rdbtnCarCrushFalse);
-		
-		rdbtnCarCrushTrue.addActionListener(new ActionListener() {
+		JRadioButton isCulletRdbtn = new JRadioButton("NIE");
+		isCulletRdbtn.setForeground(Color.DARK_GRAY);
+		isCulletRdbtn.setFont(new Font("Calibri", Font.BOLD, 14));
+		isCulletRdbtn.setBounds(281, 439, 96, 24);
+		getContentPane().add(isCulletRdbtn);
+
+		isCulletTrueRdbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnCarCrushTrue.isSelected()) {
-					rdbtnCarCrushFalse.setSelected(false);
+				if (isCulletTrueRdbtn.isSelected()) {
+					isCulletRdbtn.setSelected(false);
 				}
 			}
 		});
-		
-		rdbtnCarCrushFalse.addActionListener(new ActionListener() {
+
+		isCulletRdbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(rdbtnCarCrushFalse.isSelected()) {
-					rdbtnCarCrushTrue.setSelected(false);
+				if (isCulletRdbtn.isSelected()) {
+					isCulletTrueRdbtn.setSelected(false);
 				}
 			}
 		});
@@ -260,76 +261,169 @@ public class MainFrame extends JFrame {
 		separator_4.setBounds(10, 465, 540, 11);
 		getContentPane().add(separator_4);
 
-		JLabel lblDataWydaniaPrawa = new JLabel("Data wydania prawa jazdy:");
-		lblDataWydaniaPrawa.setForeground(Color.DARK_GRAY);
-		lblDataWydaniaPrawa.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblDataWydaniaPrawa.setBounds(25, 484, 173, 26);
-		getContentPane().add(lblDataWydaniaPrawa);
+		JLabel driveLicenceDateLbl = new JLabel("Data wydania prawa jazdy:");
+		driveLicenceDateLbl.setForeground(Color.DARK_GRAY);
+		driveLicenceDateLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		driveLicenceDateLbl.setBounds(25, 484, 173, 26);
+		getContentPane().add(driveLicenceDateLbl);
 
 		DateChooserCombo dateChooserCombo = new DateChooserCombo();
 		dateChooserCombo.setBounds(191, 490, 155, 20);
 		getContentPane().add(dateChooserCombo);
 
-		JLabel lblMarka = new JLabel("Marka:");
-		lblMarka.setForeground(Color.DARK_GRAY);
-		lblMarka.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblMarka.setBounds(25, 266, 116, 26);
-		getContentPane().add(lblMarka);
+		JLabel modelNameLbl = new JLabel("Marka:");
+		modelNameLbl.setForeground(Color.DARK_GRAY);
+		modelNameLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		modelNameLbl.setBounds(25, 266, 116, 26);
+		getContentPane().add(modelNameLbl);
 
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setForeground(Color.WHITE);
 		separator_5.setBounds(10, 300, 540, 11);
 		getContentPane().add(separator_5);
 
-		JLabel lblRocznik = new JLabel("Rocznik:");
-		lblRocznik.setForeground(Color.DARK_GRAY);
-		lblRocznik.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblRocznik.setBounds(324, 266, 53, 26);
-		getContentPane().add(lblRocznik);
+		JLabel productionYearLbl = new JLabel("Rocznik:");
+		productionYearLbl.setForeground(Color.DARK_GRAY);
+		productionYearLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		productionYearLbl.setBounds(324, 266, 53, 26);
+		getContentPane().add(productionYearLbl);
 
-		JYearChooser yearChooser = new JYearChooser();
-		yearChooser.setBounds(386, 269, 77, 20);
-		getContentPane().add(yearChooser);
+		productionYearChooser = new JYearChooser();
+		productionYearChooser.setBounds(386, 269, 77, 20);
+		getContentPane().add(productionYearChooser);
 
-		JLabel lblPaliwo = new JLabel("Paliwo:");
-		lblPaliwo.setForeground(Color.DARK_GRAY);
-		lblPaliwo.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPaliwo.setBounds(176, 266, 57, 26);
-		getContentPane().add(lblPaliwo);
+		JLabel fuelTypeLbl = new JLabel("Paliwo:");
+		fuelTypeLbl.setForeground(Color.DARK_GRAY);
+		fuelTypeLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		fuelTypeLbl.setBounds(176, 266, 57, 26);
+		getContentPane().add(fuelTypeLbl);
 
 		String fuelType[] = { "LPG", "PG+LPG", "PB", "ON" };
-		JComboBox comboBox_1 = new JComboBox(fuelType);
-		comboBox_1.setBounds(223, 269, 91, 20);
-		getContentPane().add(comboBox_1);
+		JComboBox fuelTypeComboBox = new JComboBox(fuelType);
+		fuelTypeComboBox.setBounds(223, 269, 91, 20);
+		getContentPane().add(fuelTypeComboBox);
 
-		JLabel lblPrzebieg = new JLabel("Wpisz przebieg w km:");
-		lblPrzebieg.setForeground(Color.DARK_GRAY);
-		lblPrzebieg.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblPrzebieg.setBounds(25, 309, 139, 26);
-		getContentPane().add(lblPrzebieg);
+		JLabel mileageLbl = new JLabel("Wpisz przebieg w km:");
+		mileageLbl.setForeground(Color.DARK_GRAY);
+		mileageLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		mileageLbl.setBounds(25, 309, 139, 26);
+		getContentPane().add(mileageLbl);
 
 		JSeparator separator_6 = new JSeparator();
 		separator_6.setForeground(Color.WHITE);
 		separator_6.setBounds(10, 335, 540, 11);
 		getContentPane().add(separator_6);
 
-		JLabel lblLiczbaWacicieli = new JLabel("Liczba w\u0142a\u015Bcicieli:");
-		lblLiczbaWacicieli.setForeground(Color.DARK_GRAY);
-		lblLiczbaWacicieli.setFont(new Font("Calibri", Font.BOLD, 14));
-		lblLiczbaWacicieli.setBounds(25, 346, 116, 26);
-		getContentPane().add(lblLiczbaWacicieli);
+		JLabel numberOfOwnerLbl = new JLabel("Liczba w\u0142a\u015Bcicieli:");
+		numberOfOwnerLbl.setForeground(Color.DARK_GRAY);
+		numberOfOwnerLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		numberOfOwnerLbl.setBounds(25, 346, 116, 26);
+		getContentPane().add(numberOfOwnerLbl);
 
-		String numberOfOwners[] = { "1", "2", "3 lub wiêcej" };
-		JComboBox comboBox_2 = new JComboBox(numberOfOwners);
-		comboBox_2.setFont(new Font("Calibri", Font.BOLD, 14));
-		comboBox_2.setBounds(142, 346, 91, 20);
-		getContentPane().add(comboBox_2);
+		String numberOfOwners[] = { "1", "2 lub wiêcej" };
+		JComboBox numberOfOwnerComboBox = new JComboBox(numberOfOwners);
+		numberOfOwnerComboBox.setFont(new Font("Calibri", Font.BOLD, 14));
+		numberOfOwnerComboBox.setBounds(142, 346, 91, 20);
+		getContentPane().add(numberOfOwnerComboBox);
 		
-		textField = new JTextField();
-		textField.setBounds(163, 312, 86, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
 		
+		
+		JTextField mileageTextField = new JTextField();
+		mileageTextField.setText("0.0");
+		mileageTextField.setBounds(163, 312, 86, 20);
+		getContentPane().add(mileageTextField);
+		mileageTextField.setColumns(10);
+
+		JLabel enginePowerLbl = new JLabel("Wpisz moc silnika:");
+		enginePowerLbl.setForeground(Color.DARK_GRAY);
+		enginePowerLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		enginePowerLbl.setBounds(270, 309, 139, 26);
+		getContentPane().add(enginePowerLbl);
+
+		enginePowerTextField = new JTextField();
+		enginePowerTextField.setText("0.0");
+		enginePowerTextField.setColumns(10);
+		enginePowerTextField.setBounds(386, 312, 86, 20);
+		getContentPane().add(enginePowerTextField);
+
+		JLabel insucurePriceInfo = new JLabel("<html>Cena ubezpieczenia<br/>wyniesie oko\u0142o: </html>",
+				SwingConstants.CENTER);
+		insucurePriceInfo.setForeground(Color.DARK_GRAY);
+		insucurePriceInfo.setFont(new Font("Calibri", Font.PLAIN, 18));
+		insucurePriceInfo.setBounds(341, 465, 191, 58);
+		insucurePriceInfo.setVisible(false);
+		getContentPane().add(insucurePriceInfo);
+
+		Label insucurPriceNumber = new Label("0.00 z\u0142");
+		insucurPriceNumber.setAlignment(Label.CENTER);
+		insucurPriceNumber.setForeground(new Color(255, 255, 255));
+		insucurPriceNumber.setBackground(new Color(210, 105, 30));
+		insucurPriceNumber.setFont(new Font("Calibri", Font.BOLD, 21));
+		insucurPriceNumber.setBounds(352, 521, 179, 53);
+		getContentPane().add(insucurPriceNumber);
+
+		calculateBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Click");
+
+				String modelName = (String) modelNameComboBox.getSelectedItem();
+				Integer productionYear = productionYearChooser.getValue();
+				String mileage = mileageTextField.getText();
+				String fuelType = (String) fuelTypeComboBox.getSelectedItem();
+				String enginePower = enginePowerTextField.getText();
+				Integer numberOfOwner = numberOfOwnerComboBox.getSelectedIndex() + 1;
+				int age = ageSlider.getValue();
+
+				String gender;
+				if (genderFemaleRdbtn.isSelected()) {
+					gender = "female";
+				} else
+					gender = "male";
+
+				Boolean hasKids;
+				if (hasKidsTrueRdbtn.isSelected()) {
+					hasKids = true;
+				} else
+					hasKids = false;
+
+				GregorianCalendar driveLicenceDate = (GregorianCalendar) dateChooserCombo.getSelectedDate()
+						.getInstance();
+
+				Boolean isCullet;
+				if (isCulletTrueRdbtn.isSelected()) {
+					isCullet = true;
+				} else
+					isCullet = false;
+
+				System.out.println(" Model: " + modelName + "\n Rok produkcji: " + productionYear + "\n Przebieg: "
+						+ mileage + "\n Typ paliwa: " + fuelType + "\n Moc silnika: " + enginePower
+						+ "\n Liczba w³aœcicieli: " + numberOfOwner + "\n Wiek kierowcy: " + age + "\n Posiada dzieci: "
+						+ hasKids + "\n Data wydania prawa jazy: " + driveLicenceDate + "\n St³uczka:" + isCullet);
+
+				insucurePriceInfo.setVisible(true);
+
+				Person person1 = new Person(age, gender, hasKids);
+				Car car1 = new Car(modelName, productionYear, 50001.0, fuelType, 3.20, numberOfOwner);
+				DriveInformation driveInfo1 = new DriveInformation(driveLicenceDate, isCullet);
+				Policyholder policyholder1 = new Policyholder(person1, car1, driveInfo1);
+
+				InsurancePrice insurancePrice1 = new InsurancePrice(0.0);
+
+				KieServices ks = KieServices.Factory.get();
+				KieContainer kContainer = ks.getKieClasspathContainer();
+				KieSession kSession = kContainer.newKieSession("ksession-rules");
+
+				kSession.insert(insurancePrice1);
+				kSession.insert(policyholder1);
+				kSession.fireAllRules();
+				int price = insurancePrice1.getPrice().intValue();
+
+				insucurPriceNumber.setText(Integer.toString(price) + ",00 z³");
+
+				System.out.println(insurancePrice1.toString());
+
+			}
+		});
 
 	}
 }
