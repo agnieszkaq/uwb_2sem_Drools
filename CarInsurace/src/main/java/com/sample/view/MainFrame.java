@@ -10,6 +10,7 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -24,14 +25,20 @@ import com.sample.model.Policyholder;
 import com.toedter.calendar.JYearChooser;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.text.NumberFormatter;
 
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
 import java.awt.Label;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class MainFrame extends JFrame {
 	private JTextField enginePowerTextField;
@@ -321,6 +328,31 @@ public class MainFrame extends JFrame {
 		getContentPane().add(numberOfOwnerComboBox);
 
 		JTextField mileageTextField = new JTextField();
+		mileageTextField.addKeyListener(new KeyAdapter() {
+
+			boolean dot = false;
+
+			@Override
+			public void keyTyped(KeyEvent evt) {
+				char vChar = evt.getKeyChar();
+				if (mileageTextField.getText().equals(""))
+					dot = false;
+				if (dot == false) {
+					if (vChar == '.')
+						dot = true;
+					else if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE)
+							|| (vChar == KeyEvent.VK_DELETE))) {
+						evt.consume();
+					}
+				} else {
+					if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE)
+							|| (vChar == KeyEvent.VK_DELETE))) {
+						evt.consume();
+					}
+				}
+			}
+		});
+
 		mileageTextField.setText("0.0");
 		mileageTextField.setBounds(163, 312, 86, 20);
 		getContentPane().add(mileageTextField);
@@ -333,6 +365,31 @@ public class MainFrame extends JFrame {
 		getContentPane().add(enginePowerLbl);
 
 		enginePowerTextField = new JTextField();
+		enginePowerTextField.addKeyListener(new KeyAdapter() {
+
+			boolean dot = false;
+
+			public void keyTyped(KeyEvent evt) {
+				char vChar = evt.getKeyChar();
+				if (enginePowerTextField.getText().equals(""))
+					dot = false;
+				if (dot == false) {
+					if (vChar == '.')
+						dot = true;
+					else if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE)
+							|| (vChar == KeyEvent.VK_DELETE))) {
+						getToolkit().beep();
+						evt.consume();
+					}
+				} else {
+					if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE)
+							|| (vChar == KeyEvent.VK_DELETE))) {
+						getToolkit().beep();
+						evt.consume();
+					}
+				}
+			}
+		});
 		enginePowerTextField.setText("0.0");
 		enginePowerTextField.setColumns(10);
 		enginePowerTextField.setBounds(386, 312, 86, 20);
@@ -386,7 +443,7 @@ public class MainFrame extends JFrame {
 					isCullet = true;
 				} else
 					isCullet = false;
-				
+
 				double doubleMileage = Double.parseDouble(mileageTextField.getText());
 				double doubleEnginePower = Double.parseDouble(enginePowerTextField.getText());
 
@@ -398,7 +455,8 @@ public class MainFrame extends JFrame {
 				insucurePriceInfo.setVisible(true);
 
 				Person person1 = new Person(age, gender, hasKids);
-				Car car1 = new Car(modelName, productionYear, doubleMileage, fuelType, doubleEnginePower, numberOfOwner);
+				Car car1 = new Car(modelName, productionYear, doubleMileage, fuelType, doubleEnginePower,
+						numberOfOwner);
 				DriveInformation driveInfo1 = new DriveInformation(driveLicenceDate, isCullet);
 				Policyholder policyholder1 = new Policyholder(person1, car1, driveInfo1);
 
