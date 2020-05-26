@@ -10,37 +10,26 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import datechooser.beans.DateChooserCombo;
 
-import com.sample.model.Car;
-import com.sample.model.DriveInformation;
-import com.sample.model.InsurancePrice;
-import com.sample.model.Person;
-import com.sample.model.Policyholder;
 import com.toedter.calendar.JYearChooser;
 import java.awt.event.ActionListener;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.NumberFormatter;
-
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
-
 import java.awt.Label;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
+import javax.swing.DefaultComboBoxModel;
 
 public class MainFrame extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+
 	private JTextField enginePowerTextField;
 	private JYearChooser productionYearChooser;
 
@@ -219,7 +208,7 @@ public class MainFrame extends JFrame {
 		String modelName[] = { "Audi", "BMW", "Mercedes", "Honda", "Nissan", "Ford" };
 		JComboBox modelNameComboBox = new JComboBox(modelName);
 		modelNameComboBox.setFont(new Font("Calibri", Font.BOLD, 14));
-		modelNameComboBox.setBounds(74, 269, 91, 20);
+		modelNameComboBox.setBounds(74, 262, 91, 30);
 		getContentPane().add(modelNameComboBox);
 
 		JLabel isCulletLbl = new JLabel("Czy kiedykolwiek mia\u0142e\u015B st\u0142uczk\u0119?");
@@ -274,7 +263,7 @@ public class MainFrame extends JFrame {
 
 		JLabel modelNameLbl = new JLabel("Marka:");
 		modelNameLbl.setForeground(Color.DARK_GRAY);
-		modelNameLbl.setFont(new Font("Calibri", Font.BOLD, 14));
+		modelNameLbl.setFont(new Font("Calibri", Font.BOLD, 15));
 		modelNameLbl.setBounds(25, 266, 116, 26);
 		getContentPane().add(modelNameLbl);
 
@@ -285,23 +274,25 @@ public class MainFrame extends JFrame {
 
 		JLabel productionYearLbl = new JLabel("Rocznik:");
 		productionYearLbl.setForeground(Color.DARK_GRAY);
-		productionYearLbl.setFont(new Font("Calibri", Font.BOLD, 14));
-		productionYearLbl.setBounds(324, 266, 53, 26);
+		productionYearLbl.setFont(new Font("Calibri", Font.BOLD, 15));
+		productionYearLbl.setBounds(331, 262, 53, 26);
 		getContentPane().add(productionYearLbl);
 
 		productionYearChooser = new JYearChooser();
-		productionYearChooser.setBounds(386, 269, 77, 20);
+		productionYearChooser.setBounds(386, 262, 86, 27);
 		getContentPane().add(productionYearChooser);
 
 		JLabel fuelTypeLbl = new JLabel("Paliwo:");
 		fuelTypeLbl.setForeground(Color.DARK_GRAY);
-		fuelTypeLbl.setFont(new Font("Calibri", Font.BOLD, 14));
-		fuelTypeLbl.setBounds(176, 266, 57, 26);
+		fuelTypeLbl.setFont(new Font("Calibri", Font.BOLD, 15));
+		fuelTypeLbl.setBounds(175, 264, 49, 26);
 		getContentPane().add(fuelTypeLbl);
 
 		String fuelType[] = { "LPG", "PG+LPG", "PB", "ON" };
 		JComboBox fuelTypeComboBox = new JComboBox(fuelType);
-		fuelTypeComboBox.setBounds(223, 269, 91, 20);
+		fuelTypeComboBox.setModel(new DefaultComboBoxModel(new String[] {"LPG", "LPG+PB ", "PB", "ON"}));
+		fuelTypeComboBox.setFont(new Font("Calibri", Font.BOLD, 14));
+		fuelTypeComboBox.setBounds(230, 262, 91, 30);
 		getContentPane().add(fuelTypeComboBox);
 
 		JLabel mileageLbl = new JLabel("Wpisz przebieg w km:");
@@ -324,15 +315,13 @@ public class MainFrame extends JFrame {
 		String numberOfOwners[] = { "1", "2 lub wiêcej" };
 		JComboBox numberOfOwnerComboBox = new JComboBox(numberOfOwners);
 		numberOfOwnerComboBox.setFont(new Font("Calibri", Font.BOLD, 14));
-		numberOfOwnerComboBox.setBounds(142, 346, 160, 20);
+		numberOfOwnerComboBox.setBounds(142, 340, 160, 26);
 		getContentPane().add(numberOfOwnerComboBox);
 
 		JTextField mileageTextField = new JTextField();
 		mileageTextField.addKeyListener(new KeyAdapter() {
 
 			boolean dot = false;
-
-			@Override
 			public void keyTyped(KeyEvent evt) {
 				char vChar = evt.getKeyChar();
 				if (mileageTextField.getText().equals(""))
@@ -342,11 +331,13 @@ public class MainFrame extends JFrame {
 						dot = true;
 					else if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE)
 							|| (vChar == KeyEvent.VK_DELETE))) {
+						getToolkit().beep();
 						evt.consume();
 					}
 				} else {
 					if (!(Character.isDigit(vChar) || (vChar == KeyEvent.VK_BACK_SPACE)
 							|| (vChar == KeyEvent.VK_DELETE))) {
+						getToolkit().beep();
 						evt.consume();
 					}
 				}
@@ -368,7 +359,6 @@ public class MainFrame extends JFrame {
 		enginePowerTextField.addKeyListener(new KeyAdapter() {
 
 			boolean dot = false;
-
 			public void keyTyped(KeyEvent evt) {
 				char vChar = evt.getKeyChar();
 				if (enginePowerTextField.getText().equals(""))
@@ -417,11 +407,9 @@ public class MainFrame extends JFrame {
 
 				String modelName = (String) modelNameComboBox.getSelectedItem();
 				Integer productionYear = productionYearChooser.getValue();
-				String mileage = mileageTextField.getText();
 				String fuelType = (String) fuelTypeComboBox.getSelectedItem();
-				String enginePower = enginePowerTextField.getText();
 				Integer numberOfOwner = numberOfOwnerComboBox.getSelectedIndex() + 1;
-				int age = ageSlider.getValue();
+				Integer age = ageSlider.getValue();
 
 				String gender;
 				if (genderFemaleRdbtn.isSelected()) {
@@ -454,27 +442,13 @@ public class MainFrame extends JFrame {
 
 				insucurePriceInfo.setVisible(true);
 
-				Person person1 = new Person(age, gender, hasKids);
-				Car car1 = new Car(modelName, productionYear, doubleMileage, fuelType, doubleEnginePower,
-						numberOfOwner);
-				DriveInformation driveInfo1 = new DriveInformation(driveLicenceDate, isCullet);
-				Policyholder policyholder1 = new Policyholder(person1, car1, driveInfo1);
-
-				InsurancePrice insurancePrice1 = new InsurancePrice(0.0);
-
-				KieServices ks = KieServices.Factory.get();
-				KieContainer kContainer = ks.getKieClasspathContainer();
-				KieSession kSession = kContainer.newKieSession("ksession-rules");
-
-				kSession.insert(insurancePrice1);
-				kSession.insert(policyholder1);
-				kSession.fireAllRules();
-				int price = insurancePrice1.getPrice().intValue();
+				RuleEngineHelper ruleEngineHelper = new RuleEngineHelper(modelName, productionYear, doubleMileage,
+						fuelType, doubleEnginePower, numberOfOwner, age, gender, hasKids, driveLicenceDate, isCullet);
+				ruleEngineHelper.setVariables();
+				ruleEngineHelper.runEngine();
+				int price = ruleEngineHelper.getInsuracjePrice();
 
 				insucurPriceNumber.setText(Integer.toString(price) + ",00 z³");
-
-				System.out.println(insurancePrice1.toString());
-
 			}
 		});
 

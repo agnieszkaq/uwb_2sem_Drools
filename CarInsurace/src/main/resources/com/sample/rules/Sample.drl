@@ -107,11 +107,11 @@ rule "Percent calculating depends by milage: greater than 50 000 kilometers"
 
 end
 
-rule "Pricing depends on the fuelType:  1 - CATEGORY (PB + LPG)"
+rule "Pricing depends on the fuelType:  1 - CATEGORY (LPG + PB)"
 
     when
        i: InsurancePrice ()
-       p: Policyholder(p.getCar.fuelType.equals("LPG") || p.getCar.fuelType.equals("PB+LPG") )
+       p: Policyholder(p.getCar.fuelType.equals("LPG") || p.getCar.fuelType.equals("LPG+PB") )
     then
         i.price = i.price + 50;
 
