@@ -1,7 +1,5 @@
 package com.sample.view;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -12,7 +10,9 @@ import javax.swing.JSlider;
 import javax.swing.JRadioButton;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import datechooser.beans.DateChooserCombo;
 
@@ -31,13 +31,7 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-
 import java.awt.Label;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 public class MainFrame extends JFrame {
 	private JTextField enginePowerTextField;
@@ -323,11 +317,9 @@ public class MainFrame extends JFrame {
 		String numberOfOwners[] = { "1", "2 lub wiêcej" };
 		JComboBox numberOfOwnerComboBox = new JComboBox(numberOfOwners);
 		numberOfOwnerComboBox.setFont(new Font("Calibri", Font.BOLD, 14));
-		numberOfOwnerComboBox.setBounds(142, 346, 91, 20);
+		numberOfOwnerComboBox.setBounds(142, 346, 160, 20);
 		getContentPane().add(numberOfOwnerComboBox);
-		
-		
-		
+
 		JTextField mileageTextField = new JTextField();
 		mileageTextField.setText("0.0");
 		mileageTextField.setBounds(163, 312, 86, 20);
@@ -364,7 +356,7 @@ public class MainFrame extends JFrame {
 
 		calculateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Click");
+				System.out.println("\n___ Calculate button click: ___");
 
 				String modelName = (String) modelNameComboBox.getSelectedItem();
 				Integer productionYear = productionYearChooser.getValue();
@@ -394,16 +386,19 @@ public class MainFrame extends JFrame {
 					isCullet = true;
 				} else
 					isCullet = false;
+				
+				double doubleMileage = Double.parseDouble(mileageTextField.getText());
+				double doubleEnginePower = Double.parseDouble(enginePowerTextField.getText());
 
-				System.out.println(" Model: " + modelName + "\n Rok produkcji: " + productionYear + "\n Przebieg: "
-						+ mileage + "\n Typ paliwa: " + fuelType + "\n Moc silnika: " + enginePower
-						+ "\n Liczba w³aœcicieli: " + numberOfOwner + "\n Wiek kierowcy: " + age + "\n Posiada dzieci: "
-						+ hasKids + "\n Data wydania prawa jazy: " + driveLicenceDate + "\n St³uczka:" + isCullet);
+				System.out.println(" Model: " + modelName + "\n Production year " + productionYear + "\n Mileage: "
+						+ doubleMileage + "\n Fuel type: " + fuelType + "\n Engine power: " + doubleEnginePower
+						+ "\n Number of owner: " + numberOfOwner + "\n Driver age: " + age + "\n Has kids?: " + hasKids
+						+ "\n Drive licence date: " + driveLicenceDate + "\n Is cullet?: " + isCullet);
 
 				insucurePriceInfo.setVisible(true);
 
 				Person person1 = new Person(age, gender, hasKids);
-				Car car1 = new Car(modelName, productionYear, 50001.0, fuelType, 3.20, numberOfOwner);
+				Car car1 = new Car(modelName, productionYear, doubleMileage, fuelType, doubleEnginePower, numberOfOwner);
 				DriveInformation driveInfo1 = new DriveInformation(driveLicenceDate, isCullet);
 				Policyholder policyholder1 = new Policyholder(person1, car1, driveInfo1);
 
